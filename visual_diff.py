@@ -62,6 +62,7 @@ if args.gui:
         print("ERROR: Cannot load GUI. Try doing a `sudo apt-get install "
               "python3-pil.imagetk`. If that doesn't help, open a python3 "
               "shell, `import gui`, and see what's going wrong.")
+        sys.exit(1)
 else:
     # Only import matplotlib if we're going to use it, so that people who don't
     # have it can continue using the rest of the program. We don't import this
