@@ -5,10 +5,19 @@ TODO: put some images here!
 
 ## Prerequisites
 You'll need Python3 with PIL, and if you want to use the GUI you'll need the TK
-bindings for PIL. If you're running on Ubuntu, try this:
+bindings for PIL. Furthermore, if you want to save images to file, you'll need
+matplotlib. If you're running on Ubuntu, try this:
 
 ```
 sudo apt-get install python3-pil.imagetk
+pip3 install matplotlib
+```
+
+or on Mac:
+
+```
+pip3 install pillow
+pip3 install matplotlib
 ```
 
 If you're running a different OS, good luck (and if you get it to work, please

@@ -1,7 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import argparse
-from matplotlib import pyplot
 import numpy
 import sys
 import token
@@ -64,9 +63,12 @@ if args.gui:
               "python3-pil.imagetk`. If that doesn't help, open a python3 "
               "shell, `import gui`, and see what's going wrong.")
 else:
-    # WARNING: You probably don't want to display the image straight to the
-    # screen.  On a 1000-line file with 10 tokens per line, we're generating a
-    # 100 megapixel image, and pyplot has trouble with images that large. Just
-    # write it to file and open it with the GIMP or something else designed for
-    # large files.
+    # Only import matplotlib if we're going to use it, so that people who don't
+    # have it can continue using the rest of the program.
+    from matplotlib import pyplot
+
+    # WARNING: Converting large arrays to images can take up so many resources
+    # that your computer freezes. For example, on a 1000-line file with 10
+    # tokens per line, we're generating a 100 megapixel image, and pyplot has
+    # trouble with images that large.
     pyplot.imsave(args.output_location, matrix)
