@@ -64,7 +64,10 @@ if args.gui:
               "shell, `import gui`, and see what's going wrong.")
 else:
     # Only import matplotlib if we're going to use it, so that people who don't
-    # have it can continue using the rest of the program.
+    # have it can continue using the rest of the program. We don't import this
+    # at the top of the file in a try block, like we did with `gui`, because on
+    # Mac, importing a misconfigured matplotlib results in an NSException, and I
+    # don't know what to do with that on a non-Mac.
     from matplotlib import pyplot
 
     # WARNING: Converting large arrays to images can take up so many resources
