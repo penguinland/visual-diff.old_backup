@@ -64,11 +64,12 @@ if args.gui:
               "shell, `import gui`, and see what's going wrong.")
         sys.exit(1)
 else:
-    # Only import matplotlib if we're going to use it, so that people who don't
-    # have it can continue using the rest of the program. We don't import this
-    # at the top of the file in a try block, like we did with `gui`, because on
-    # Mac, importing a misconfigured matplotlib results in an NSException, and I
-    # don't know what to do with that on a non-Mac.
+    # Only import matplotlib if we're going to use it. There's some weird
+    # behavior on Macs in which matplotlib works fine on its own, and PIL works
+    # fine on its own, but if you import matplotlib and then try *using* PIL for
+    # the GUI, we have an uncaught NSException. Consequently, we don't import
+    # matplotlib at the top of the file, and instead only importi it if we're
+    # actually going to use it.
     from matplotlib import pyplot
 
     # WARNING: Converting large arrays to images can take up so many resources
