@@ -22,7 +22,8 @@ class _Context(tk.Text):
         height = 2 * self.CONTEXT_COUNT + 1
         width = self.PRELUDE_WIDTH + self.TEXT_WIDTH
         super().__init__(tk_parent, width=width, height=height,
-                         state=tk.DISABLED, font="TkFixedFont")
+                         state=tk.DISABLED, font="TkFixedFont", borderwidth=2,
+                         relief="ridge")
         self.pack()
         # TODO: Use a NamedTuple?
         self._tokens, self._lines, self._boundaries = data
@@ -57,8 +58,8 @@ class _Context(tk.Text):
         self.insert(tk.INSERT, text)
 
         # Highlight the tokens of interest...
-        (ar, ac) = self._boundaries[first_token_index][0]
-        (br, bc) = self._boundaries[last_token_index][1]
+        ar, ac = self._boundaries[first_token_index][0]
+        br, bc = self._boundaries[last_token_index][1]
         self.tag_add("token",
                      "{}.{}".format(self.CONTEXT_COUNT + 1,
                                     ac + self.PRELUDE_WIDTH),
@@ -100,7 +101,8 @@ def launch(matrix, data_a, data_b):
 
     def _quit(event):
         root.destroy()
-    [root.bind("<Control-{}>".format(char), _quit) for char in "wWqQ"]
+    for char in "wWqQ":
+        root.bind("<Control-{}>".format(char), _quit)
 
     gui = _Gui(matrix, data_a, data_b, root)
     while True:
@@ -110,6 +112,8 @@ def launch(matrix, data_a, data_b):
         except UnicodeDecodeError:
             # Macs running Python 3.6 and older have a bug in TK where they
             # interpret scroll wheel events as though they should be UTF-8 even
-            # though they're not.
+            # though they're not. You can try upgrading TK, but Python 3.7 and
+            # later has its own built-in version of TK which doesn't have the
+            # bug.
             print("Macs with old versions of TK installed don't scroll "
                   "properly. Try upgrading Python to version 3.7 or later.")
