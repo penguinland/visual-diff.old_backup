@@ -8,14 +8,17 @@ from zoom_map import ZoomMap
 
 
 class _Context(tk.Text):
+    """
+    A display of surrounding code, with the relevant tokens highlighted. We will
+    have one of these for the token(s) represented by the column of the mouse
+    cursor, and another for its row.
+    """
     CONTEXT_COUNT = 3  # Lines to display before/after the current one
     # TODO: What about files with over 99,999 lines?
     LINE_NUMBER_WIDTH = 5  # Number of characters to allocate for line numbers
     PRELUDE_WIDTH = LINE_NUMBER_WIDTH + 2  # Line number, colon, space
-    # TODO: What about files with very long lines? They currently wrap around to
-    # the next line and push later context out of the widget. Should we truncate
-    # them instead? and if so, should we change which part gets cut based on the
-    # location of the token within the line?
+    # NOTE: Lines longer than TEXT_WIDTH get truncated, and any tokens off the
+    # end don't get shown/highlighted.
     TEXT_WIDTH = 80
 
     def __init__(self, tk_parent, data, zoom_map):
@@ -47,7 +50,7 @@ class _Context(tk.Text):
         start = line_number - self.CONTEXT_COUNT - 1
         end   = line_number + self.CONTEXT_COUNT
         lines = ["{:>{}}: {}".format(i + 1, self.LINE_NUMBER_WIDTH,
-                                     self._lines[i])
+                                     self._lines[i][:80])
                  if 0 <= i < len(self._lines) else ""
                  for i in range(start, end)]
         text = "\n".join(lines)
@@ -97,6 +100,9 @@ class _Gui(tk.Frame):
 
 
 def launch(matrix, data_a, data_b):
+    """
+    Creates a new window for the GUI and runs the main program.
+    """
     root = tk.Tk()
 
     def _quit(event):
