@@ -68,12 +68,12 @@ else:
     # behavior on Macs in which matplotlib works fine on its own, and PIL works
     # fine on its own, but if you import matplotlib and then try *using* PIL for
     # the GUI, we have an uncaught NSException. Consequently, we don't import
-    # matplotlib at the top of the file, and instead only importi it if we're
+    # matplotlib at the top of the file, and instead only import it if we're
     # actually going to use it.
     from matplotlib import pyplot
 
     # WARNING: Converting large arrays to images can take up so many resources
     # that your computer freezes. For example, on a 1000-line file with 10
     # tokens per line, we're generating a 100 megapixel image, and pyplot has
-    # trouble with images that large.
+    # trouble with images that large. Do not try this with very large programs!
     pyplot.imsave(args.output_location, matrix)

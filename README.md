@@ -13,7 +13,9 @@ sudo apt-get install python3-pil.imagetk
 pip3 install matplotlib
 ```
 
-or on Mac:
+On Mac, first make sure you're running Python version 3.7 (as versions 3.6
+and earlier have a bug in TK which prevents the scroll events from being
+processed correctly), and then:
 
 ```
 pip3 install pillow
